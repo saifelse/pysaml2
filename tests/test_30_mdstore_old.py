@@ -21,8 +21,6 @@ from saml2.s_utils import UnknownPrincipal
 
 from pathutils import full_path
 
-import pytest
-
 sec_config = config.Config()
 #sec_config.xmlsec_binary = sigver.get_xmlsec_binary(["/opt/local/bin"])
 
@@ -307,7 +305,6 @@ def test_load_local_dir():
     assert len(mds.keys()) == 4  # number of idps
 
 
-@pytest.mark.skip(reason="Requires access to internet resources")
 def test_load_external():
     sec_config.xmlsec_binary = sigver.get_xmlsec_binary(["/opt/local/bin"])
     mds = MetadataStore(ATTRCONV, sec_config,

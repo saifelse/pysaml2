@@ -26,8 +26,6 @@ from pathutils import full_path
 
 import responses
 
-import pytest
-
 sec_config = config.Config()
 # sec_config.xmlsec_binary = sigver.get_xmlsec_binary(["/opt/local/bin"])
 
@@ -364,7 +362,6 @@ def test_load_local_dir():
     assert len(mds.keys()) == 4  # number of idps
 
 
-@pytest.mark.skip(reason="Requires access to internet resources")
 def test_load_extern_incommon():
     sec_config.xmlsec_binary = sigver.get_xmlsec_binary(["/opt/local/bin"])
     mds = MetadataStore(ATTRCONV, sec_config,
@@ -390,7 +387,6 @@ def test_load_local():
     assert cfg
 
 
-@pytest.mark.skip(reason="Requires access to internet resources")
 def test_load_remote_encoding():
     crypto = sigver._get_xmlsec_cryptobackend()
     sc = sigver.SecurityContext(crypto, key_type="", cert_type="")
