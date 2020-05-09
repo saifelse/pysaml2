@@ -4,8 +4,8 @@ import datetime
 import os
 import re
 from collections import OrderedDict
-from unittest.mock import Mock
-from unittest.mock import patch
+from mock import Mock
+from mock import patch
 
 import responses
 

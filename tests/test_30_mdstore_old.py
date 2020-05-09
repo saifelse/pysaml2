@@ -3,7 +3,7 @@
 import datetime
 import re
 import os
-from unittest.mock import patch
+from mock import patch
 
 from saml2.mdstore import MetadataStore, MetaDataMDX
 from saml2.mdstore import destinations
