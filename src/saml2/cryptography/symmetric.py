@@ -39,7 +39,12 @@ class Fernet(object):
             try:
                 raw_key = _base64.b64decode(key)
             except Exception as e:
-                raise fernet_key_error from e
+                # py2 equivalent of py3 of `raise fernet_key_error from e`
+                # Implementation based off of https://github.com/PythonCharmers/python-future
+                fernet_key_error.__cause__ = e
+                object.__setattr__(fernet_key_error.__cause__,  "__traceback__", sys.exc_info()[2])
+                fernet_key_error.__suppress_context__ = True
+                raise fernet_key_error
             else:
                 if len(raw_key) != 32:
                     raise fernet_key_error
