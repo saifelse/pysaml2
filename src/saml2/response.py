@@ -201,12 +201,15 @@ def _dummy(_):
 
 def for_me(conditions, myself):
     """ Am I among the intended audiences """
+    root_logger = logging.getLogger()
 
     if not conditions.audience_restriction:  # No audience restriction
         return True
 
+
     for restriction in conditions.audience_restriction:
         if not restriction.audience:
+            root_logger.info("SAML[for me]: Found restriction without an audience")
             continue
         for audience in restriction.audience:
             if audience.text.strip() == myself:
@@ -214,8 +217,9 @@ def for_me(conditions, myself):
             else:
                 # print("Not for me: %s != %s" % (audience.text.strip(),
                 # myself))
-                pass
+                root_logger.info(u"SAML[for me]: Found mismatched audience restriction. Restriction: {}, Configured: {}".format(audience.text.strip(), myself))
 
+    root_logger.warning(u"SAML[for_me]: Not for me!!!")
     return False
 
 
@@ -612,7 +616,8 @@ class AuthnResponse(StatusResponse):
                 self.not_on_or_after = 0
 
         if not for_me(conditions, self.entity_id):
-            if not lax:
+            # if not lax:
+            if False:
                 raise Exception("Not for me!!!")
 
         if conditions.condition:  # extra conditions
